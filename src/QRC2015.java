@@ -47,13 +47,19 @@ public class QRC2015 {
         toForm.add('i');
         toForm.add('j');
         toForm.add('k');
+        int added = 0;
         while (!queue.isEmpty()) {
-            if (queue.length() <= str.length() && repeat-- > 0)
+            if (queue.length() <= str.length() && repeat-- > 0) {
+                if (added < -3)
+                    return "NO";
+                added--;
                 queue = queue + str;
+            }
             char n = queue.charAt(0);
             queue = queue.substring(1, queue.length());
             if (!toForm.isEmpty() && n == toForm.peek()) {
                 toForm.poll();
+                added = 1;
             } else {
                 if (!queue.isEmpty()) {
                     char m = queue.charAt(0);
