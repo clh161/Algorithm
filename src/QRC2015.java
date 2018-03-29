@@ -22,6 +22,29 @@ public class QRC2015 {
         }
     }
 
+    public static int combine(int a, int b) {
+        if (a == b)
+            return 0;
+        for (int i = 1; i <= 3; i++) {
+            if (a != i && b != i)
+                return i;
+        }
+        throw new IllegalArgumentException("Invalid: " + a + " " + b);
+    }
+
+
+    public static boolean isPositive(int a, int b) {
+        if (a == b)
+            return false;
+        if (a == 1 && b == 2) return false;
+        if (a == 1 && b == 3) return true;
+        if (a == 2 && b == 1) return true;
+        if (a == 2 && b == 3) return false;
+        if (a == 3 && b == 1) return false;
+        if (a == 3 && b == 2) return true;
+        throw new IllegalArgumentException("Invalid: " + a + " " + b);
+    }
+
     public static String solve(String str, long repeat) {
         boolean isPositive = true;
         Queue<Integer> queue = new LinkedList<>();
@@ -43,16 +66,16 @@ public class QRC2015 {
                     if (n == m) {
                         isPositive = !isPositive;
                     } else {
-                        if (n < m) {
+                        if (isPositive(n, m))
                             isPositive = !isPositive;
+                        int newInt = combine(n, m);
+                        if (newInt != 0) {
+                            int k = queue.size();
+                            queue.add(newInt);
+                            for (long i = 0; i < k; i++) {
+                                queue.add(queue.poll());
+                            }
                         }
-
-                        int k = queue.size();
-                        queue.add((m - n + 4) % 4);
-                        for (long i = 0; i < k; i++) {
-                            queue.add(queue.poll());
-                        }
-                        int x = 0;
                     }
                 } else if (repeat <= 0)
                     return "NO";
