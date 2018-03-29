@@ -16,66 +16,56 @@ public class QRC2015 {
         }
     }
 
-    public static void addToQueue(Queue<Integer> queue, String str) {
-        for (int k = 0; k < str.length(); k++) {
-            queue.add(str.charAt(k) - 'i' + 1);
-        }
-    }
-
-    public static int combine(int a, int b) {
+    public static char combine(char a, char b) {
         if (a == b)
             return 0;
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 'i'; i <= 'k'; i++) {
             if (a != i && b != i)
-                return i;
+                return (char) i;
         }
         throw new IllegalArgumentException("Invalid: " + a + " " + b);
     }
 
 
-    public static boolean isPositive(int a, int b) {
+    public static boolean isPositive(char a, char b) {
         if (a == b)
             return false;
-        if (a == 1 && b == 2) return false;
-        if (a == 1 && b == 3) return true;
-        if (a == 2 && b == 1) return true;
-        if (a == 2 && b == 3) return false;
-        if (a == 3 && b == 1) return false;
-        if (a == 3 && b == 2) return true;
+        if (a == 'i' && b == 'j') return false;
+        if (a == 'i' && b == 'k') return true;
+        if (a == 'j' && b == 'i') return true;
+        if (a == 'j' && b == 'k') return false;
+        if (a == 'k' && b == 'i') return false;
+        if (a == 'k' && b == 'j') return true;
         throw new IllegalArgumentException("Invalid: " + a + " " + b);
     }
 
     public static String solve(String str, long repeat) {
         boolean isPositive = true;
-        Queue<Integer> queue = new LinkedList<>();
-        addToQueue(queue, str);
+        String queue = str;
         repeat--;
-        Queue<Integer> toForm = new LinkedList<>();
-        toForm.add(1);
-        toForm.add(2);
-        toForm.add(3);
+        Queue<Character> toForm = new LinkedList<>();
+        toForm.add('i');
+        toForm.add('j');
+        toForm.add('k');
         while (!queue.isEmpty()) {
-            if (queue.size() <= str.length() && repeat-- > 0)
-                addToQueue(queue, str);
-            int n = queue.poll();
+            if (queue.length() <= str.length() && repeat-- > 0)
+                queue = queue + str;
+            char n = queue.charAt(0);
+            queue = queue.substring(1, queue.length());
             if (!toForm.isEmpty() && n == toForm.peek()) {
                 toForm.poll();
             } else {
                 if (!queue.isEmpty()) {
-                    int m = queue.poll();
+                    char m = queue.charAt(0);
+                    queue = queue.substring(1, queue.length());
                     if (n == m) {
                         isPositive = !isPositive;
                     } else {
                         if (isPositive(n, m))
                             isPositive = !isPositive;
-                        int newInt = combine(n, m);
-                        if (newInt != 0) {
-                            int k = queue.size();
-                            queue.add(newInt);
-                            for (long i = 0; i < k; i++) {
-                                queue.add(queue.poll());
-                            }
-                        }
+                        char newInt = combine(n, m);
+                        if (newInt != 0)
+                            queue = newInt + queue;
                     }
                 } else if (repeat <= 0)
                     return "NO";
