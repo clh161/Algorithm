@@ -79,7 +79,9 @@ public class QRC2015 {
                     }
                 } else if (repeat <= 0)
                     return "NO";
-
+            }
+            if (toForm.isEmpty() && repeat > 4) {
+                repeat %= 4;
             }
 
 
