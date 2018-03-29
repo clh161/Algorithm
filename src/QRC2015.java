@@ -76,7 +76,7 @@ public class QRC2015 {
 
 
         }
-        return isPositive && toForm.isEmpty() && queue.isEmpty() ? "YES" : "NO";
+        return isPositive && toForm.isEmpty() ? "YES" : "NO";
     }
 
 }
