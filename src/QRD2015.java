@@ -14,23 +14,42 @@ public class QRD2015 {
         }
     }
 
-    public static String solve(int x, int xLen, int yLen) {
+    public static String solve(int pathLen, int xLen, int yLen) {
         int area = xLen * yLen;
         //not divisible
-        if (area / x <= 1 || area % x != 0)
+        if (area / pathLen <= 1 || area % pathLen != 0)
             return "RICHARD";
-        getFirstMove(x, xLen, yLen);
+        for (long i = 0; i < Math.pow(4, pathLen); i++) {
 
+        }
+        int[] path = new int[pathLen - 1];
+        for (int i = 0; i < pathLen - 1; i++)
+            path[i] = i % 2 == 0 ? 0 : 1;
+
+        boolean[][] grid = new boolean[xLen][yLen];
+        while (!placeOminos(grid, path, 0, 0)) {
+            if (indexOf(path, 2) != -1) {
+                path[indexOf(path, 2)] = 1;
+            }
+        }
         return "GABRIEL";
     }
 
-    public static int[] getFirstMove(int len, int xLen, int yLen) {
-        int[] path = new int[len - 1];
-//        for (int i = 0; i < len - 1; i++)
-//            path[i] = i % 2 == 0 ? 0 : 1;
-
-
+    public static int[] getPath(long n, int pathLen) {
+        int[] path = new int[pathLen];
+        int i = 0;
+        while (n > 0) {
+            path[i] = (int) (n % 4);
+            n /= 4;
+            i++;
+        }
         return path;
+    }
+
+    public static int indexOf(int[] path, int direction) {
+        for (int i = 0; i < path.length; i++)
+            if (path[i] == direction) return i;
+        return -1;
     }
 
     public static boolean placeOminos(boolean[][] grid, int[] path, int x, int y) {
