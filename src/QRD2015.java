@@ -26,8 +26,18 @@ public class QRD2015 {
                 if (placeOminos(grid, path, 0, 0) && !isSpillover(grid, pathLen)) {
                     for (int j = 0; j < xLen; j++) {
                         for (int k = 0; k < yLen; k++) {
-                            if (!placeOminos(copy(grid), path, j, k))
+                            if (!placeOminos(copy(grid), path, j, k)) {
                                 return "Richard";
+                            } else {
+                                boolean[][] newGrid = copy(grid);
+                                placeOminos(newGrid, path, j, k);
+                                for (int l = 0; l < grid.length; l++) {
+                                    for (int m = 0; m < grid[l].length; m++) {
+                                        if (getEmptyArea(copy(newGrid), l, m) % pathLen != 0)
+                                            return "Richard";
+                                    }
+                                }
+                            }
                         }
                     }
                 }
