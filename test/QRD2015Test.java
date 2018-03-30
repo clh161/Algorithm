@@ -1,6 +1,5 @@
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -16,12 +15,47 @@ class QRD2015Test {
     }
 
     @Test
-    void getFirstMove() {
-        assertArrayEquals(new boolean[]{true}, QRD2015.getFirstMove(2, 2, 2));
-        assertArrayEquals(new boolean[]{true}, QRD2015.getFirstMove(2, 4, 2));
-        assertArrayEquals(new boolean[]{true, true, true}, QRD2015.getFirstMove(4, 4, 2));
-        assertArrayEquals(new boolean[]{false}, QRD2015.getFirstMove(2, 1, 4));
-        assertArrayEquals(new boolean[]{true, false, true, false, true, false, true, true, true}, QRD2015.getFirstMove(10, 10, 5));
-        assertArrayEquals(new boolean[]{true, false, true, false, true, false, false, false, false}, QRD2015.getFirstMove(10, 5, 10));
+    void getEmptyArea() {
+        boolean[][] grid = new boolean[100][100];
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < 50; j++) {
+                grid[i][j] = true;
+            }
+        }
+        assertEquals(0, QRD2015.getEmptyArea(QRD2015.copy(grid), 0, 0));
+        assertEquals(0, QRD2015.getEmptyArea(QRD2015.copy(grid), 3, 3));
+        assertEquals(5000, QRD2015.getEmptyArea(QRD2015.copy(grid), 99, 99));
+        assertEquals(5000, QRD2015.getEmptyArea(QRD2015.copy(grid), 0, 50));
+    }
+
+    @Test
+    void isSpillover() {
+        boolean[][] grid = new boolean[100][100];
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < 50; j++) {
+                grid[i][j] = true;
+            }
+        }
+        assertEquals(false, QRD2015.isSpillover(QRD2015.copy(grid), 5000));
+    }
+
+    @Test
+    void isSpillover2() {
+        boolean[][] grid = new boolean[100][100];
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 20; j < 50; j++) {
+                grid[i][j] = true;
+            }
+        }
+        assertEquals(true, QRD2015.isSpillover(QRD2015.copy(grid), 1000));
+    }
+
+    @Test
+    void placeOminos() {
+        assertEquals(false, QRD2015.placeOminos(new boolean[10][10], new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, 0, 0));
+        assertEquals(true, QRD2015.placeOminos(new boolean[10][10], new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1}, 0, 0));
+        assertEquals(true, QRD2015.placeOminos(new boolean[10][10], new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3}, 0, 0));
+        assertEquals(false, QRD2015.placeOminos(new boolean[4][4], new int[]{1, 2, 3, 0}, 0, 0));
+
     }
 }

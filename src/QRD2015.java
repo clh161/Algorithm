@@ -24,32 +24,59 @@ public class QRD2015 {
         return "GABRIEL";
     }
 
-    public static boolean[] getFirstMove(int len, int xLen, int yLen) {
-        boolean[] path = new boolean[len - 1];
-        boolean lastIsRight = false;
-        int x = 0;
-        int y = 0;
-        for (int i = 0; i < len - 1; i++) {
-            boolean shouldGoRight = shouldGoRight(lastIsRight, xLen, yLen, x, y);
-            path[i] = shouldGoRight;
-            lastIsRight = shouldGoRight;
-            if (shouldGoRight) {
-                x++;
-            } else {
-                y++;
-            }
-        }
+    public static int[] getFirstMove(int len, int xLen, int yLen) {
+        int[] path = new int[len - 1];
+//        for (int i = 0; i < len - 1; i++)
+//            path[i] = i % 2 == 0 ? 0 : 1;
+
+
         return path;
     }
 
-    public static boolean shouldGoRight(boolean lastIsRight, int xLen, int yLen, int x, int y) {
-        if (x == xLen - 1)
-            return false;
-        if (x == xLen - 2 && y != 0)
-            return false;
-        if (!lastIsRight)
-            return true;
-        return y == yLen - 2;
+    public static boolean placeOminos(boolean[][] grid, int[] path, int x, int y) {
+        grid[x][y] = true;
+        for (int i = 0; i < path.length; i++) {
+            if (path[i] == 0) y--;
+            if (path[i] == 1) x++;
+            if (path[i] == 2) y++;
+            if (path[i] == 3) x--;
+            if (x < 0 || x >= grid.length || y < 0 || y >= grid[x].length || grid[x][y])
+                return false;
+            grid[x][y] = true;
+        }
+        return true;
+    }
+
+    public static boolean isSpillover(boolean[][] grid, int pathLen) {
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                int area = getEmptyArea(copy(grid), i, j);
+                if (area == 0) continue;
+                if (grid.length * grid[0].length - pathLen != area)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    public static int getEmptyArea(boolean[][] grid, int x, int y) {
+        if (x < 0 || x >= grid.length || y < 0 || y >= grid[x].length || grid[x][y]) return 0;
+        grid[x][y] = true;
+        return getEmptyArea(grid, x + 1, y)
+                + getEmptyArea(grid, x - 1, y)
+                + getEmptyArea(grid, x, y + 1)
+                + getEmptyArea(grid, x, y - 1)
+                + 1;
+    }
+
+    public static boolean[][] copy(boolean[][] grid) {
+        boolean[][] newGrid = new boolean[grid.length][grid[0].length];
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                newGrid[i][j] = grid[i][j];
+            }
+        }
+        return newGrid;
     }
 
 }
