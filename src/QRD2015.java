@@ -23,18 +23,22 @@ public class QRD2015 {
             int[][] paths = getPathVariations(getPath(i, pathLen));
             for (int[] path : paths) {
                 boolean[][] grid = new boolean[xLen][yLen];
-                if (placeOminos(grid, path, 0, 0) && !isSpillover(grid, pathLen)) {
-                    for (int j = 0; j < xLen; j++) {
-                        for (int k = 0; k < yLen; k++) {
-                            if (!placeOminos(copy(grid), path, j, k)) {
-                                return "Richard";
-                            } else {
-                                boolean[][] newGrid = copy(grid);
-                                placeOminos(newGrid, path, j, k);
-                                for (int l = 0; l < grid.length; l++) {
-                                    for (int m = 0; m < grid[l].length; m++) {
-                                        if (getEmptyArea(copy(newGrid), l, m) % pathLen != 0)
-                                            return "Richard";
+                for (int n = 0; n < grid.length; n++) {
+                    for (int o = 0; o < grid[n].length; o++) {
+                        if (placeOminos(grid, path, n, o) && !isSpillover(grid, pathLen)) {
+                            for (int j = 0; j < xLen; j++) {
+                                for (int k = 0; k < yLen; k++) {
+                                    if (!placeOminos(copy(grid), path, j, k)) {
+                                        return "RICHARD";
+                                    } else {
+                                        boolean[][] newGrid = copy(grid);
+                                        placeOminos(newGrid, path, j, k);
+                                        for (int l = 0; l < grid.length; l++) {
+                                            for (int m = 0; m < grid[l].length; m++) {
+                                                if (getEmptyArea(copy(newGrid), l, m) % pathLen != 0)
+                                                    return "RICHARD";
+                                            }
+                                        }
                                     }
                                 }
                             }
