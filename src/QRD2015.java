@@ -19,9 +19,11 @@ public class QRD2015 {
             return "RICHARD";
         if ((xLen * yLen) % pathLen != 0)
             return "RICHARD";
+        if (pathLen == 1)
+            return "GABRIEL";
         for (long i = 0; i < Math.pow(4, pathLen - 1); i++) {
             int[] p = getPath(i, pathLen - 1);
-            if (placeOminos(new boolean[xLen][yLen], p, 0, 0)) {
+            if (isValidPath(p)) {
                 boolean hasPossiblePath = false;
                 for (int[] path : getPathVariations(p)) {
                     for (int[] size : new int[][]{{xLen, yLen}, {yLen, xLen}}) {
@@ -58,6 +60,23 @@ public class QRD2015 {
         for (int i = 0; i < path.length; i++)
             if (path[i] == direction) return i;
         return -1;
+    }
+
+    public static boolean isValidPath(int[] path) {
+        boolean[][] grid = new boolean[path.length][path.length];
+        grid[0][0] = true;
+        int x = 0;
+        int y = 0;
+        for (int i = 0; i < path.length; i++) {
+            if (path[i] == 0) y--;
+            if (path[i] == 1) x++;
+            if (path[i] == 2) y++;
+            if (path[i] == 3) x--;
+            if (x < 0 || x >= grid.length || y < 0 || y >= grid[x].length || grid[x][y])
+                return false;
+            grid[x][y] = true;
+        }
+        return true;
     }
 
     public static boolean placeOminos(boolean[][] grid, int[] path, int x, int y) {

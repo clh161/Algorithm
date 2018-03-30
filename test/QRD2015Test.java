@@ -9,14 +9,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class QRD2015Test {
     @Test
     void getAnswer() {
-//        assertEquals("GABRIEL", QRD2015.solve(2, 1, 2));
-//        assertEquals("GABRIEL", QRD2015.solve(2, 2, 1));
-//        assertEquals("GABRIEL", QRD2015.solve(2, 2, 2));
-//        assertEquals("RICHARD", QRD2015.solve(2, 1, 3));
-//        assertEquals("RICHARD", QRD2015.solve(4, 4, 1));
+        assertEquals("GABRIEL", QRD2015.solve(2, 1, 2));
+        assertEquals("GABRIEL", QRD2015.solve(2, 2, 1));
+        assertEquals("GABRIEL", QRD2015.solve(2, 2, 2));
+        assertEquals("RICHARD", QRD2015.solve(2, 1, 3));
+        assertEquals("RICHARD", QRD2015.solve(4, 4, 1));
         assertEquals("GABRIEL", QRD2015.solve(3, 2, 3));
-//        assertEquals("GABRIEL", QRD2015.solve(1, 3, 4));
-//        assertEquals("RICHARD", QRD2015.solve(4, 3, 4));
+        assertEquals("GABRIEL", QRD2015.solve(1, 3, 4));
+        assertEquals("GABRIEL", QRD2015.solve(4, 3, 4));
     }
 
     @Test
