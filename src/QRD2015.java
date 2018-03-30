@@ -15,29 +15,24 @@ public class QRD2015 {
     }
 
     public static String solve(int pathLen, int xLen, int yLen) {
-        int area = xLen * yLen;
-        //not divisible
-        if (area / pathLen <= 1 || area % pathLen != 0)
+        if (pathLen > xLen && pathLen > yLen)
             return "RICHARD";
-        for (long i = 0; i < Math.pow(4, pathLen); i++) {
-            int[][] paths = getPathVariations(getPath(i, pathLen));
-            for (int[] path : paths) {
-                boolean[][] grid = new boolean[xLen][yLen];
-                for (int n = 0; n < grid.length; n++) {
-                    for (int o = 0; o < grid[n].length; o++) {
-                        if (placeOminos(grid, path, n, o) && !isSpillover(grid, pathLen)) {
-                            for (int j = 0; j < xLen; j++) {
-                                for (int k = 0; k < yLen; k++) {
-                                    if (!placeOminos(copy(grid), path, j, k)) {
-                                        return "RICHARD";
-                                    } else {
-                                        boolean[][] newGrid = copy(grid);
-                                        placeOminos(newGrid, path, j, k);
-                                        for (int l = 0; l < grid.length; l++) {
-                                            for (int m = 0; m < grid[l].length; m++) {
-                                                if (getEmptyArea(copy(newGrid), l, m) % pathLen != 0)
-                                                    return "RICHARD";
-                                            }
+        if ((xLen * yLen) % pathLen != 0)
+            return "RICHARD";
+        for (long i = 0; i < Math.pow(4, pathLen - 1); i++) {
+            int[] p = getPath(i, pathLen - 1);
+            if (placeOminos(new boolean[xLen][yLen], p, 0, 0)) {
+                boolean hasPossiblePath = false;
+                for (int[] path : getPathVariations(p)) {
+                    for (int[] size : new int[][]{{xLen, yLen}, {yLen, xLen}}) {
+                        for (int n = 0; n < size[0]; n++) {
+                            for (int o = 0; o < size[1]; o++) {
+                                boolean[][] grid = new boolean[size[0]][size[1]];
+                                if (placeOminos(grid, path, n, o)) {
+                                    for (int j = 0; j < grid.length; j++) {
+                                        for (int k = 0; k < grid[j].length; k++) {
+                                            if (getEmptyArea(copy(grid), j, k) % pathLen == 0)
+                                                hasPossiblePath = true;
                                         }
                                     }
                                 }
@@ -45,6 +40,8 @@ public class QRD2015 {
                         }
                     }
                 }
+                if (!hasPossiblePath)
+                    return "RICHARD";
             }
         }
         return "GABRIEL";
