@@ -20,16 +20,17 @@ public class QRD2015 {
         if (area / pathLen <= 1 || area % pathLen != 0)
             return "RICHARD";
         for (long i = 0; i < Math.pow(4, pathLen); i++) {
-
-        }
-        int[] path = new int[pathLen - 1];
-        for (int i = 0; i < pathLen - 1; i++)
-            path[i] = i % 2 == 0 ? 0 : 1;
-
-        boolean[][] grid = new boolean[xLen][yLen];
-        while (!placeOminos(grid, path, 0, 0)) {
-            if (indexOf(path, 2) != -1) {
-                path[indexOf(path, 2)] = 1;
+            int[][] paths = getPathVariations(getPath(i, pathLen));
+            for (int[] path : paths) {
+                boolean[][] grid = new boolean[xLen][yLen];
+                if (placeOminos(grid, path, 0, 0) && !isSpillover(grid, pathLen)) {
+                    for (int j = 0; j < xLen; j++) {
+                        for (int k = 0; k < yLen; k++) {
+                            if (!placeOminos(copy(grid), path, j, k))
+                                return "Richard";
+                        }
+                    }
+                }
             }
         }
         return "GABRIEL";
@@ -96,6 +97,26 @@ public class QRD2015 {
             }
         }
         return newGrid;
+    }
+
+    public static int[][] getPathVariations(int[] path) {
+        int[][] paths = new int[4][path.length];
+        for (int i = 0; i < path.length; i++)
+            paths[0][i] = path[i];
+        for (int j = 0; j < 3; j++) {
+            for (int i = 0; i < path.length; i++) {
+                if (j == 2) {
+                    paths[j + 1][i] = (path[i] + 2) % 4;
+                } else {
+                    if (path[i] % 2 == j) {
+                        paths[j + 1][i] = (path[i] + 2) % 4;
+                    } else {
+                        paths[j + 1][i] = path[i];
+                    }
+                }
+            }
+        }
+        return paths;
     }
 
 }

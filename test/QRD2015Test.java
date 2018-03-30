@@ -9,10 +9,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class QRD2015Test {
     @Test
     void getAnswer() {
-//        assertEquals("GABRIEL", QRD2015.solve(2, 2, 2));
-//        assertEquals("RICHARD", QRD2015.solve(2, 1, 3));
-//        assertEquals("RICHARD", QRD2015.solve(4, 4, 1));
-//        assertEquals("GABRIEL", QRD2015.solve(3, 2, 3));
+        assertEquals("GABRIEL", QRD2015.solve(2, 2, 2));
+        assertEquals("RICHARD", QRD2015.solve(2, 1, 3));
+        assertEquals("RICHARD", QRD2015.solve(4, 4, 1));
+        assertEquals("GABRIEL", QRD2015.solve(3, 2, 3));
     }
 
     @Test
@@ -63,6 +63,12 @@ class QRD2015Test {
     void getPath() {
         assertArrayEquals(new int[]{1, 1, 2, 0}, QRD2015.getPath(37, 4));
         assertArrayEquals(new int[]{0, 0, 0, 0}, QRD2015.getPath(0, 4));
+
+    }
+
+    @Test
+    void getPathVariations() {
+        assertArrayEquals(new int[][]{{1, 1, 2, 2}, {1, 1, 0, 0}, {3, 3, 2, 2}, {3, 3, 0, 0}}, QRD2015.getPathVariations(new int[]{1, 1, 2, 2}));
 
     }
 }
