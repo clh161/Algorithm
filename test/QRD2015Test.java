@@ -17,6 +17,19 @@ class QRD2015Test {
         assertEquals("GABRIEL", QRD2015.solve(3, 2, 3));
         assertEquals("GABRIEL", QRD2015.solve(1, 3, 4));
         assertEquals("GABRIEL", QRD2015.solve(4, 3, 4));
+        assertEquals("RICHARD", QRD2015.solve(3, 2, 4));
+        assertEquals("RICHARD", QRD2015.solve(4, 1, 4));
+        assertEquals("GABRIEL", QRD2015.solve(1, 2, 2));
+        assertEquals("RICHARD", QRD2015.solve(3, 1, 4));
+        assertEquals("RICHARD", QRD2015.solve(4, 2, 2));
+        assertEquals("RICHARD", QRD2015.solve(2, 3, 3));
+        assertEquals("GABRIEL", QRD2015.solve(2, 3, 4));
+        assertEquals("GABRIEL", QRD2015.solve(1, 3, 4));
+        assertEquals("RICHARD", QRD2015.solve(3, 2, 1));
+        assertEquals("RICHARD", QRD2015.solve(4, 2, 3));
+        assertEquals("GABRIEL", QRD2015.solve(2, 2, 1));
+        assertEquals("GABRIEL", QRD2015.solve(1, 2, 4));
+        assertEquals("GABRIEL", QRD2015.solve(1, 2, 3));
     }
 
     @Test
