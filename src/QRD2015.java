@@ -29,12 +29,8 @@ public class QRD2015 {
                             for (int o = 0; o < size[1]; o++) {
                                 boolean[][] grid = new boolean[size[0]][size[1]];
                                 if (placeOminos(grid, path, n, o)) {
-                                    for (int j = 0; j < grid.length; j++) {
-                                        for (int k = 0; k < grid[j].length; k++) {
-                                            if (getEmptyArea(copy(grid), j, k) % pathLen == 0)
-                                                hasPossiblePath = true;
-                                        }
-                                    }
+                                    if (canCompletelyFill(grid, pathLen))
+                                        hasPossiblePath = true;
                                 }
                             }
                         }
@@ -128,6 +124,16 @@ public class QRD2015 {
             }
         }
         return paths;
+    }
+
+    public static boolean canCompletelyFill(boolean[][] grid, int pathLen) {
+        for (int j = 0; j < grid.length; j++) {
+            for (int k = 0; k < grid[j].length; k++) {
+                if (getEmptyArea(copy(grid), j, k) % pathLen == 0)
+                    return true;
+            }
+        }
+        return false;
     }
 
 }
