@@ -49,4 +49,26 @@ public class A1B2015 {
         }
         throw new RuntimeException("Should not reach here");
     }
+
+    public static int solve2(int[] time, int n) {
+        if (n <= time.length)
+            return n;
+        int[] timeLeft = new int[time.length];
+        while (n > 0) {
+            for (int i = 0; i < time.length; i++) {
+                if (timeLeft[i] == 0) {
+                    if (n == 1) {
+                        return i + 1;
+                    } else {
+                        timeLeft[i] += time[i];
+                        n--;
+                    }
+                }
+                timeLeft[i]--;
+            }
+
+
+        }
+        throw new RuntimeException("Should not reach here");
+    }
 }
