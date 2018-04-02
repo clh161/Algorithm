@@ -14,7 +14,7 @@ int main() {
 }
 
 double solve(int h, int m, int hunger, int increaseRate, int cost, int decreaseRate) {
-    double cost1 = ceil((max(1200 - h * 60 - m, 0) * increaseRate + hunger) / decreaseRate) * cost * 0.8;
-    double cost2 = ceil(hunger / decreaseRate) * cost;
+    double cost1 = ceil(((double) max(1200 - h * 60 - m, 0) * increaseRate + hunger) / decreaseRate) * cost * 0.8;
+    double cost2 = ceil((double) hunger / decreaseRate) * cost;
     return min(cost1, cost2);
 }
