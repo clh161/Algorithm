@@ -3,4 +3,4 @@ project(algorithm)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(CF955A ./src/CF955A.cpp)
+add_executable(CF955A CodeForce/src/CF955A.cpp)
