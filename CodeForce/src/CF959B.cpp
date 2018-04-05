@@ -21,6 +21,10 @@ int main() {
     for (int l = 0; l < k; ++l) {
         int count;
         cin >> count;
+        if (count == 1) {
+            cin >> count;
+            continue;
+        }
         int indices[count];
         int min = numeric_limits<int>::max();
         for (int i = 0; i < count; ++i) {
