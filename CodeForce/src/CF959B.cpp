@@ -5,6 +5,8 @@ using namespace std;
 
 int main() {
     int n, k, m;
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
     cin >> n >> k >> m;
     unordered_map<string, int> strings;
     for (int i = 0; i < n; ++i) {
@@ -26,7 +28,7 @@ int main() {
             continue;
         }
         int indices[count];
-        int min = numeric_limits<int>::max();
+        int min = (int) 1e9;
         for (int i = 0; i < count; ++i) {
             int index;
             cin >> index;
