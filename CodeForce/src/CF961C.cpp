@@ -2,8 +2,6 @@
 
 using namespace std;
 
-string solve(string str);
-
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
@@ -27,20 +25,18 @@ int main() {
             }
         }
     }
-    int max = n * n * 4;
-    if (toWhite[0] + toWhite[1] + toBlack[2] + toBlack[3] < max)
-        max = toWhite[0] + toWhite[1] + toBlack[2] + toBlack[3];
-    if (toBlack[0] + toWhite[1] + toWhite[2] + toBlack[3] < max)
-        max = toBlack[0] + toWhite[1] + toWhite[2] + toBlack[3];
-    if (toBlack[0] + toBlack[1] + toWhite[2] + toWhite[3] < max)
-        max = toBlack[0] + toBlack[1] + toWhite[2] + toWhite[3];
-    if (toWhite[0] + toBlack[1] + toBlack[2] + toWhite[3] < max)
-        max = toWhite[0] + toBlack[1] + toBlack[2] + toWhite[3];
-    if (toWhite[0] + toBlack[1] + toWhite[2] + toBlack[3] < max)
-        max = toWhite[0] + toBlack[1] + toWhite[2] + toBlack[3];
-    if (toBlack[0] + toWhite[1] + toBlack[2] + toWhite[3] < max)
-        max = toBlack[0] + toWhite[1] + toBlack[2] + toWhite[3];
-    cout << max;
+    int min = n * n * 4;
+    int sumBlack = 0;
+    for (int i = 0; i < 4; ++i) {
+        sumBlack += toBlack[i];
+    }
+    for (int i = 0; i < 4; ++i) {
+        for (int j = i + 1; j < 4; ++j) {
+            int sum = sumBlack - toBlack[i] + toWhite[i] - toBlack[j] + toWhite[j];
+            if (sum < min) min = sum;
+        }
+    }
+    cout << min;
     return 0;
 }
 
